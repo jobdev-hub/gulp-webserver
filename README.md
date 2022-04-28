@@ -8,7 +8,7 @@
 ## Install
 
 ```sh
-$ npm install --save-dev gulp-webserver
+$ npm i https://github.com/jobdev-hub/gulp-webserver
 ```
 
 ## Usage
