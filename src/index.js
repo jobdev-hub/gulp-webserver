@@ -11,7 +11,6 @@ var watch = require('watch');
 var fs = require('fs');
 var serveIndex = require('serve-index');
 var path = require('path');
-var open = require('open');
 var url = require('url');
 var extend = require('node.extend');
 var enableMiddlewareShorthand = require('./enableMiddlewareShorthand');
@@ -33,7 +32,6 @@ module.exports = function(options) {
     path: '/',
     fallback: false,
     https: false,
-    open: false,
 
     /**
      *
@@ -83,22 +81,7 @@ module.exports = function(options) {
     'livereload'
   ]);
 
-  if (typeof config.open === 'string' && config.open.length > 0 && config.open.indexOf('http') !== 0) {
-    // ensure leading slash if this is NOT a complete url form
-    config.open = (config.open.indexOf('/') !== 0 ? '/' : '') + config.open;
-  }
-
   var app = connect();
-
-  var openInBrowser = function() {
-    if (config.open === false) return;
-    if (typeof config.open === 'string' && config.open.indexOf('http') === 0) {
-      // if this is a complete url form
-      open(config.open);
-      return;
-    }
-    open('http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port + (typeof config.open === 'string' ? config.open : ''));
-  };
 
   var lrServer;
 
@@ -210,9 +193,9 @@ module.exports = function(options) {
         cert: fs.readFileSync(config.https.cert || __dirname + '/../ssl/dev-cert.pem')
       };
     }
-    webserver = https.createServer(opts, app).listen(config.port, config.host, openInBrowser);
+    webserver = https.createServer(opts, app).listen(config.port, config.host);
   } else {
-    webserver = http.createServer(app).listen(config.port, config.host, openInBrowser);
+    webserver = http.createServer(app).listen(config.port, config.host);
   }
 
   gutil.log('Webserver started at', gutil.colors.cyan('http' + (config.https ? 's' : '') + '://' + config.host + ':' + config.port));

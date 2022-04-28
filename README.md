@@ -1,9 +1,9 @@
-gulp-webserver [![Build Status](http://img.shields.io/travis/schickling/gulp-webserver.svg?style=flat)](https://travis-ci.org/schickling/gulp-webserver) [![](http://img.shields.io/npm/dm/gulp-webserver.svg?style=flat)](https://www.npmjs.org/package/gulp-webserver) [![](http://img.shields.io/npm/v/gulp-webserver.svg?style=flat)](https://www.npmjs.org/package/gulp-webserver)
-==============
-
-> Streaming gulp plugin to run a local webserver with LiveReload
+> Streaming gulp plugin to run a local webserver with LiveReload (modified)
 
 ##### Hint: This is a rewrite of [gulp-connect](https://github.com/AveVlad/gulp-connect/)
+
+## Modified
+"open" removed (package npm and function)
 
 ## Install
 
@@ -23,8 +23,7 @@ gulp.task('webserver', function() {
   gulp.src('app')
     .pipe(webserver({
       livereload: true,
-      directoryListing: true,
-      open: true
+      directoryListing: true
     }));
 });
 ```
@@ -39,7 +38,6 @@ Key | Type | Default | Description |
 `livereload` | Boolean/Object | `false` | whether to use livereload. For advanced options, provide an object. You can use the 'port' property to set a custom live reload port and the `filter` function to filter out files to watch. The object also needs to set `enable` property to true (e.g. `enable: true`) in order to activate the livereload mode. It is off by default.
 `directoryListing` | Boolean/Object | `false` | whether to display a directory listing. For advanced options, provide an object with the 'enable' property set to true. You can use the 'path' property to set a custom path or the 'options' property to set custom [serve-index](https://github.com/expressjs/serve-index) options.
 `fallback` | String | `undefined` | file to fall back to (relative to webserver root)
-`open` | Boolean/String | `false` | open the localhost server in the browser. By providing a String you can specify the path to open (for complete path, use the complete url `http://my-server:8080/public/`) .
 `https` | Boolean/Object | `false` | whether to use https or not. By default, `gulp-webserver` provides you with a development certificate but you remain free to specify a path for your key and certificate by providing an object like this one: `{key: 'path/to/key.pem', cert: 'path/to/cert.pem'}`.
 `middleware` | Function/Array | `[]` | a connect middleware function or a list of middleware functions
 `proxies` | Array | `[]`| a list of proxy objects.  Each proxy object can be specified by `{source: '/abc', target: 'http://localhost:8080/abc', options: {headers: {'ABC_HEADER': 'abc'}}}`.
